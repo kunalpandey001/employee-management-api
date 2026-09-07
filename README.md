@@ -102,10 +102,6 @@ employee-management-api/
 
 │   └── services.py
 
-│
-
-├── .env
-
 ├── .gitignore
 
 ├── alembic.ini
