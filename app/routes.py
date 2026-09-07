@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, status
+from typing import Literal
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -40,7 +41,7 @@ def get_employees(
     department: str = None,
     designation: str = None,
     sort_by: str = "id",
-    order: str = "asc",
+    order: Literal["asc", "desc"] = "asc",
     db: Session = Depends(get_db)
 ):
     employees = get_all_employees(
