@@ -1,22 +1,8 @@
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 
 from app.main import app
 from app.routes import get_db
-
-
-TEST_DATABASE_URL = (
-    "postgresql://employee_user:employee_pass@localhost:5432/employee_test_db"
-)
-
-test_engine = create_engine(TEST_DATABASE_URL)
-
-TestingSessionLocal = sessionmaker(
-    autocommit=False,
-    autoflush=False,
-    bind=test_engine
-)
+from tests.conftest import TestingSessionLocal
 
 
 def override_get_db():
