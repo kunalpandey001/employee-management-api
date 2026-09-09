@@ -1,0 +1,26 @@
+services:
+
+  db:
+    image: postgres:16
+    container_name: employee-postgres-compose
+    environment:
+      POSTGRES_USER: employee_user
+      POSTGRES_PASSWORD: employee_pass
+      POSTGRES_DB: employee_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build: .
+    container_name: employee-api-compose
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://employee_user:employee_pass@db:5432/employee_db
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
