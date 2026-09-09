@@ -145,3 +145,57 @@ def test_delete_employee():
     )
 
     assert get_response.status_code == 404
+
+
+def test_search_employee_by_name():
+    employee_data = {
+        "name": "Rahul Sharma",
+        "email": "rahul.search@example.com",
+        "department": "Engineering",
+        "designation": "Python Developer"
+    }
+
+    create_response = client.post(
+        "/employees/",
+        json=employee_data
+    )
+
+    assert create_response.status_code == 201
+
+    response = client.get(
+        "/employees/search?name=Rahul"
+    )
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert len(data) == 1
+    assert data[0]["name"] == "Rahul Sharma"
+
+
+def test_search_employee_by_department():
+    employee_data = {
+        "name": "Priya Mehta",
+        "email": "priya.search@example.com",
+        "department": "Data Science",
+        "designation": "Data Engineer"
+    }
+
+    create_response = client.post(
+        "/employees/",
+        json=employee_data
+    )
+
+    assert create_response.status_code == 201
+
+    response = client.get(
+        "/employees/search?department=Data"
+    )
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert len(data) == 1
+    assert data[0]["department"] == "Data Science"
