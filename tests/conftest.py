@@ -1,4 +1,5 @@
 import pytest
+
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 
@@ -36,3 +37,31 @@ def clean_database(db):
         text("TRUNCATE TABLE employees RESTART IDENTITY CASCADE")
     )
     db.commit()
+
+
+@pytest.fixture
+def employee_data():
+    return {
+        "name": "Test Employee",
+        "email": "test.employee@example.com",
+        "department": "Engineering",
+        "designation": "Python Developer"
+    }
+
+@pytest.fixture
+def search_employee_data():
+    return {
+        "name": "Rahul Sharma",
+        "email": "rahul.search@example.com",
+        "department": "Engineering",
+        "designation": "Python Developer"
+    }
+
+@pytest.fixture
+def department_search_employee_data():
+    return {
+        "name": "Priya Mehta",
+        "email": "priya.search@example.com",
+        "department": "Data Science",
+        "designation": "Data Engineer"
+    }

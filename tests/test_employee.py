@@ -19,14 +19,7 @@ app.dependency_overrides[get_db] = override_get_db
 client = TestClient(app)
 
 
-def test_create_employee():
-    employee_data = {
-        "name": "Test Employee",
-        "email": "test.create.unique@example.com",
-        "department": "Engineering",
-        "designation": "Python Developer"
-    }
-
+def test_create_employee(employee_data):
     response = client.post(
         "/employees/",
         json=employee_data
@@ -36,21 +29,14 @@ def test_create_employee():
 
     data = response.json()
 
-    assert data["name"] == "Test Employee"
-    assert data["email"] == "test.create.unique@example.com"
-    assert data["department"] == "Engineering"
-    assert data["designation"] == "Python Developer"
+    assert data["name"] == employee_data["name"]
+    assert data["email"] == employee_data["email"]
+    assert data["department"] == employee_data["department"]
+    assert data["designation"] == employee_data["designation"]
     assert "id" in data
 
 
-def test_get_employee_by_id():
-    employee_data = {
-        "name": "Get Test Employee",
-        "email": "get.test.unique@example.com",
-        "department": "Engineering",
-        "designation": "Python Developer"
-    }
-
+def test_get_employee_by_id(employee_data):
     create_response = client.post(
         "/employees/",
         json=employee_data
@@ -69,18 +55,12 @@ def test_get_employee_by_id():
     data = response.json()
 
     assert data["id"] == employee_id
-    assert data["name"] == "Get Test Employee"
-    assert data["email"] == "get.test.unique@example.com"
+    assert data["name"] == employee_data["name"]
+    assert data["email"] == employee_data["email"]
 
 
-def test_update_employee():
-    employee_data = {
-        "name": "Update Test Employee",
-        "email": "update.test.unique@example.com",
-        "department": "Engineering",
-        "designation": "Python Developer"
-    }
-
+def test_update_employee(employee_data):
+   
     create_response = client.post(
         "/employees/",
         json=employee_data
@@ -113,14 +93,8 @@ def test_update_employee():
     assert data["designation"] == "Senior Python Developer"
 
 
-def test_delete_employee():
-    employee_data = {
-        "name": "Delete Test Employee",
-        "email": "delete.test.unique@example.com",
-        "department": "Engineering",
-        "designation": "Python Developer"
-    }
-
+def test_delete_employee(employee_data):
+   
     create_response = client.post(
         "/employees/",
         json=employee_data
@@ -147,17 +121,11 @@ def test_delete_employee():
     assert get_response.status_code == 404
 
 
-def test_search_employee_by_name():
-    employee_data = {
-        "name": "Rahul Sharma",
-        "email": "rahul.search@example.com",
-        "department": "Engineering",
-        "designation": "Python Developer"
-    }
+def test_search_employee_by_name(search_employee_data):
 
     create_response = client.post(
         "/employees/",
-        json=employee_data
+        json=search_employee_data
     )
 
     assert create_response.status_code == 201
@@ -174,17 +142,12 @@ def test_search_employee_by_name():
     assert data[0]["name"] == "Rahul Sharma"
 
 
-def test_search_employee_by_department():
-    employee_data = {
-        "name": "Priya Mehta",
-        "email": "priya.search@example.com",
-        "department": "Data Science",
-        "designation": "Data Engineer"
-    }
+def test_search_employee_by_department(department_search_employee_data):
+    
 
     create_response = client.post(
         "/employees/",
-        json=employee_data
+        json=department_search_employee_data
     )
 
     assert create_response.status_code == 201
