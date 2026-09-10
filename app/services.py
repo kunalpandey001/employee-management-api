@@ -24,6 +24,8 @@ def get_all_employees(
             Employee.designation.ilike(f"%{designation}%")
         )
 
+    total = query.count()
+
     allowed_sort_fields = {
         "id": Employee.id,
         "name": Employee.name,
@@ -42,12 +44,17 @@ def get_all_employees(
     else:
         query = query.order_by(sort_column.asc())
 
-    return (
+    employees = (
         query
         .offset(skip)
         .limit(limit)
         .all()
     )
+
+    return {
+        "items": employees,
+        "total": total
+    }
 
 
 def search_employees(

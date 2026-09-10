@@ -31,3 +31,9 @@ class EmployeeResponse(BaseModel):
     designation: str
 
     model_config = ConfigDict(from_attributes=True)
+
+class EmployeeListResponse(BaseModel):
+    items: list[EmployeeResponse]
+    total: int
+    skip: int
+    limit: int

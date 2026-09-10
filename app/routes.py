@@ -4,7 +4,11 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.database import SessionLocal
-from app.schemas import EmployeeCreate, EmployeeResponse
+from app.schemas import (
+    EmployeeCreate,
+    EmployeeResponse,
+    EmployeeListResponse
+)
 from app.services import (
     get_all_employees,
     search_employees,
@@ -33,7 +37,7 @@ def get_db():
 # Get employees with pagination, filtering and sorting
 @router.get(
     "/",
-    response_model=list[EmployeeResponse]
+    response_model=EmployeeListResponse
 )
 def get_employees(
     skip: int = Query(0, ge=0),
@@ -60,7 +64,12 @@ def get_employees(
             detail="Invalid sort_by field"
         )
 
-    return employees
+    return {
+    "items": employees["items"],
+    "total": employees["total"],
+    "skip": skip,
+    "limit": limit
+}
 
 
 # Search employees

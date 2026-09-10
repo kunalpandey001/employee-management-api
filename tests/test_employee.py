@@ -180,8 +180,12 @@ def test_employee_pagination(pagination_employees):
 
     data = response.json()
 
-    assert len(data) == 1
-    assert data[0]["name"] == pagination_employees[1]["name"]
+    assert len(data["items"]) == 1
+    assert data["items"][0]["name"] == pagination_employees[1]["name"]
+
+    assert data["total"] == 3
+    assert data["skip"] == 1
+    assert data["limit"] == 1
 
 def test_employee_pagination_limit_validation():
     response = client.get(
@@ -207,10 +211,14 @@ def test_employee_sorting(pagination_employees):
 
     data = response.json()
 
-    assert len(data) == 3
-    assert data[0]["name"] == "Employee One"
-    assert data[1]["name"] == "Employee Three"
-    assert data[2]["name"] == "Employee Two"
+    assert len(data["items"]) == 3
+    assert data["items"][0]["name"] == pagination_employees[0]["name"]
+    assert data["items"][1]["name"] == pagination_employees[2]["name"]
+    assert data["items"][2]["name"] == pagination_employees[1]["name"]
+
+    assert data["total"] == 3
+    assert data["skip"] == 0
+    assert data["limit"] == 10
 
 def test_employee_invalid_sort_field():
     response = client.get(
