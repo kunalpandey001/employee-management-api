@@ -65,3 +65,26 @@ def department_search_employee_data():
         "department": "Data Science",
         "designation": "Data Engineer"
     }
+
+@pytest.fixture
+def pagination_employees():
+    return [
+        {
+            "name": "Employee One",
+            "email": "pagination.one@example.com",
+            "department": "Engineering",
+            "designation": "Developer"
+        },
+        {
+            "name": "Employee Two",
+            "email": "pagination.two@example.com",
+            "department": "Engineering",
+            "designation": "Developer"
+        },
+        {
+            "name": "Employee Three",
+            "email": "pagination.three@example.com",
+            "department": "Engineering",
+            "designation": "Developer"
+        }
+    ]

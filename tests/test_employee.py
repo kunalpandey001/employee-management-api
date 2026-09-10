@@ -162,3 +162,62 @@ def test_search_employee_by_department(department_search_employee_data):
 
     assert len(data) == 1
     assert data[0]["department"] == "Data Science"
+
+def test_employee_pagination(pagination_employees):
+    for employee in pagination_employees:
+        response = client.post(
+            "/employees/",
+            json=employee
+        )
+
+        assert response.status_code == 201
+
+    response = client.get(
+        "/employees/?skip=1&limit=1"
+    )
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert len(data) == 1
+    assert data[0]["name"] == pagination_employees[1]["name"]
+
+def test_employee_pagination_limit_validation():
+    response = client.get(
+        "/employees/?limit=101"
+    )
+
+    assert response.status_code == 422
+
+def test_employee_sorting(pagination_employees):
+    for employee in pagination_employees:
+        response = client.post(
+            "/employees/",
+            json=employee
+        )
+
+        assert response.status_code == 201
+
+    response = client.get(
+        "/employees/?sort_by=name&order=asc"
+    )
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert len(data) == 3
+    assert data[0]["name"] == "Employee One"
+    assert data[1]["name"] == "Employee Three"
+    assert data[2]["name"] == "Employee Two"
+
+def test_employee_invalid_sort_field():
+    response = client.get(
+        "/employees/?sort_by=invalid"
+    )
+
+    assert response.status_code == 400
+    assert response.json() == {
+        "detail": "Invalid sort_by field"
+    }
