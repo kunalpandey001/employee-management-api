@@ -229,3 +229,32 @@ def test_employee_invalid_sort_field():
     assert response.json() == {
         "detail": "Invalid sort_by field"
     }
+
+def test_create_duplicate_email(employee_data):
+    first_response = client.post(
+        "/employees/",
+        json=employee_data
+    )
+
+    assert first_response.status_code == 201
+
+    duplicate_response = client.post(
+        "/employees/",
+        json=employee_data
+    )
+
+    assert duplicate_response.status_code == 409
+    assert duplicate_response.json() == {
+        "detail": "Email already registered"
+    }
+
+
+def test_get_nonexistent_employee():
+    response = client.get(
+        "/employees/999999"
+    )
+
+    assert response.status_code == 404
+    assert response.json() == {
+        "detail": "Employee not found"
+    }
