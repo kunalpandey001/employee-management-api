@@ -1,110 +1,59 @@
-\# Employee Management API
+# Employee Management API
 
+A production-style RESTful Employee Management API built with Python, FastAPI, PostgreSQL, and SQLAlchemy.
 
+The project demonstrates REST API design, validation, database migrations, automated testing, Docker containerization, and continuous integration with GitHub Actions.
 
-A RESTful Employee Management API built with Python and FastAPI, using PostgreSQL and SQLAlchemy.
+## Features
 
+- Create employees
+- Get employees with pagination
+- Get employee by ID
+- Update employees
+- Delete employees
+- Search employees
+- Filtering and sorting
+- Pagination metadata
+- Input validation
+- Duplicate email handling
+- PostgreSQL
+- SQLAlchemy
+- Alembic migrations
+- Pytest
+- Docker
+- GitHub Actions
+- Swagger API documentation
 
+## Tech Stack
 
-\## Features
+| Technology | Purpose |
+|---|---|
+| Python 3.12 | Programming language |
+| FastAPI | REST API framework |
+| PostgreSQL 16 | Database |
+| SQLAlchemy | ORM |
+| Pydantic | Data validation |
+| Alembic | Database migrations |
+| Pytest | Testing |
+| Docker | Containerization |
+| GitHub Actions | Continuous integration |
 
-
-
-\- Create employees
-
-\- Get all employees
-
-\- Get employee by ID
-
-\- Update employees
-
-\- Delete employees
-
-\- Search employees
-
-\- Pagination
-
-\- Filtering by department and designation
-
-\- Sorting by employee fields
-
-\- Input validation with Pydantic
-
-\- Proper HTTP status codes
-
-\- Duplicate email handling
-
-\- PostgreSQL database
-
-\- SQLAlchemy ORM
-
-\- Alembic database migrations
-
-\- Interactive Swagger API documentation
-
-
-
-\## Tech Stack
-
-
-
-\- Python
-
-\- FastAPI
-
-\- PostgreSQL
-
-\- SQLAlchemy
-
-\- Pydantic
-
-\- Alembic
-
-\- Uvicorn
-
-\- Docker
-
-\- Git \& GitHub
-
-
-
-\## Project Structure
-
-
+## Architecture
 
 ```text
-
-employee-management-api/
-
-│
-
-├── alembic/
-
-│   ├── versions/
-
-│   ├── env.py
-
-│   └── script.py.mako
-
-│
-
-├── app/
-
-│   ├── database.py
-
-│   ├── main.py
-
-│   ├── models.py
-
-│   ├── routes.py
-
-│   ├── schemas.py
-
-│   └── services.py
-
-├── .gitignore
-
-├── alembic.ini
-
-└── README.md
-
+Client
+   |
+   v
+FastAPI
+   |
+   v
+Routes
+   |
+   v
+Services
+   |
+   v
+SQLAlchemy
+   |
+   v
+PostgreSQL
